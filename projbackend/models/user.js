@@ -43,7 +43,7 @@ const uuidv1 = require ('uuid/v1');
         type:Array,
         default:[]
     }
-  });
+  },{timestamps:true});
 
 
   userSchema.virtual("password")
