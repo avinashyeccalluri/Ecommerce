@@ -26,7 +26,7 @@ const uuidv1 = require ('uuid/v1');
         unique:true
     },
     userinf0:{
-        type:string,
+        type:String,
         trim:true
     },
     encry_password:{
@@ -34,9 +34,9 @@ const uuidv1 = require ('uuid/v1');
         trim:false,
         required:true,
     },
-    salt:string,
+    salt:String,
     role:{
-        type:number,
+        type:Number,
         default:0
     },
     purchases:{
@@ -56,14 +56,14 @@ const uuidv1 = require ('uuid/v1');
         return this._password;
     });
 
-  userSchema.method = {
+  userSchema.methods = {
     authenticate : function(plainpassowrd){
         return this.securePassword(plainpassowrd)=== this.encry_password;
     },
 
 
       securePassword :function(plainPassword){ 
-          if(!password) return "";
+          if(!plainPassword) return "";
           try{
                 return crypto
                 .createHmac("sha256",this.salt)
