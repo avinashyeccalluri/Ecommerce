@@ -1,66 +1,37 @@
-    
-    // it is written to use the env file in this file
-    require('dotenv').config();
+require("dotenv").config();
 
-    //importing the required npm files
-    const mongoose = require('mongoose');
-    const express = require('express')
+const mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
-    //body parser is used to parse the http methods and read the requests
-    const bodyParser =  require('body-parser')
+const authRoutes = require("./routes/auth");
 
-    //used to place the datas into the cookie 
-    const cookieParser = require('cookie-parser')
-
-    //used to connect the data with backend and front end
-    const cors = require('cors')
-
-    // this is defined because the HTML methods will be sent using this app method
-    const app =express();
-
-    //importing the routes for the authentication files
-    const authRoutes = require('./routes/auth.js')
-
-
-    // My DB connection
-    mongoose.connect(process.env.DATABASE,
- 
-    {
+//DB Connection
+mongoose
+  .connect("mongodb://localhost:27017/tshirt", {
     useNewUrlParser: true,
-     useUnifiedTopology: true,
-     useCreateIndex:true
-    }).then(()=>{
-        console.log('Database is connected');
-        
-    }).catch(
-        console.log("Database connection is not established")
-        
-    )
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => {
+    console.log("DB CONNECTED");
+  });
 
-    //My Middlewares
-    //For using the middleware in the file we should use app.use()
-    app.use(bodyParser.json());
-    app.use(cookieParser());
-    app.use(cors());
-    app.use(express.json());
+//Middlewares
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
 
-    //--------------------------------------------My Routes---------------------------------------------------------------------
+//My Routes
+app.use("/api", authRoutes);
 
-    //trying routes
-    app.get('/avinash',(req,res)=>{
-        res.send('hello i am working')
-    })
+//PORT
+const port = process.env.PORT || 8000;
 
-    app.use('/api',authRoutes)
-
-    //Port Connections
-    // process.env should be used by default to access the files in the .env file 
-    const port= process.env.PORT || 8000;
-
-
-    //Starting the server    
-    // app.listen should be used to start  the server
-    app.listen(port,()=>{
-        console.log(`App is running at ${port}`);
-        
-    })
+//Starting a server
+app.listen(port, () => {
+  console.log(`app is running at ${port}`);
+});
