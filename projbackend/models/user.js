@@ -19,7 +19,7 @@ var userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      // unique: true
+      unique: true
     },
     userinfo: {
       type: String,
@@ -43,12 +43,11 @@ var userSchema = new mongoose.Schema(
 );
 
 userSchema
-  .virtual("password") // the password in the set method is getting its value from the input form
+  .virtual("password")
   .set(function(password) {
     this._password = password;
     this.salt = uuidv1();
     this.encry_password = this.securePassword(password);
-    // this.name = "avinash altered"
   })
   .get(function() {
     return this._password;
