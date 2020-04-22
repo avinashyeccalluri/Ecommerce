@@ -13,6 +13,8 @@ exports.signup = (req, res) => {
   }
 
   const user = new User(req.body);
+  console.log(req.profile);
+  
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
@@ -22,7 +24,7 @@ exports.signup = (req, res) => {
     res.json({
       name: user.name,
       email: user.email,
-      id: user._id
+      // id: user._id
     });
   });
 };
