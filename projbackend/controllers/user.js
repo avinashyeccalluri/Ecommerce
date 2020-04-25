@@ -3,8 +3,6 @@ const User = require("../models/user");
 const Order = require('../models/order');
 
 exports.getUserById = (req, res, next, id) => {
-  console.log(id);
-  
   User.findById(id).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
@@ -61,7 +59,7 @@ exports.userPurchaseList=(req,res)=>{
                 error : "orders are not stored"
               })
             }
-            return res.json(order)
+             res.json(order)
         })
 }
 

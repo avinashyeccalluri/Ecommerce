@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
   }
 
   const user = new User(req.body);
-  console.log(req.profile);
+  // console.log(req.profile);
   
   user.save((err, user) => {
     if (err) {
